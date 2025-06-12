@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface SyncQxbTransferVOrderProgressService {
-    List<Map<String,Object>> getSyncRecord(int batchSize, BigDecimal syncVersion);
+    List<Map<String,Object>> getSyncRecord(BigDecimal syncVersion);
     void upsertOrderProgress(Map<String, Object> fields);
 }

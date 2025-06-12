@@ -20,8 +20,8 @@ public class SyncQxbTransferVOrderProgressServiceImpl implements SyncQxbTransfer
 
     @DS("qxb-transfer")
     @Override
-    public List<Map<String, Object>> getSyncRecord(int batchSize, BigDecimal syncVersion) {
-        return jdbcTemplate.queryForList(getSyncRecordSql, syncVersion, batchSize);
+    public List<Map<String, Object>> getSyncRecord(BigDecimal syncVersion) {
+        return jdbcTemplate.queryForList(getSyncRecordSql, syncVersion);
     }
 
 
@@ -84,5 +84,5 @@ public class SyncQxbTransferVOrderProgressServiceImpl implements SyncQxbTransfer
                 "    VALUES (" + insertValues + ");";
     }
 
-    private static final String getSyncRecordSql = "SELECT * FROM  v_order_progress  WHERE sync_version > ? ORDER BY sync_version LIMIT ?";
+    private static final String getSyncRecordSql = "SELECT * FROM  v_order_progress  WHERE sync_version > ? ORDER BY sync_version ";
 }

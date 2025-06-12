@@ -26,16 +26,12 @@ public class SyncQxbTransferVOrderProgressJob extends IJobHandler {
 
     @Override
     public ReturnT<String> execute(String param) throws Exception {
-        int batchSize = 100;
-        if (StringUtils.hasLength(param)) {
-            batchSize = Integer.parseInt(param);
-        }
         BigDecimal syncVersion = dataSyncConfigService.getCurrSyncVersion("v_order_progress");
         if (syncVersion == null) {
             logger.error("SyncQxbTransferVOrderProgressJob 同步异常：" + "未找到v_order_progress的同步配置.");
             throw new Exception("未找到v_order_progress的同步配置.");
         }
-        var syncRecords = syncQxbTransferVOrderProgressService.getSyncRecord(batchSize, syncVersion);
+        var syncRecords = syncQxbTransferVOrderProgressService.getSyncRecord(syncVersion);
         if (!CollectionUtils.isEmpty(syncRecords)) {
             logger.debug(String.format("待同步数量:%s,当前版本：%s", syncRecords.size(), syncVersion));
             syncRecords.forEach(o -> {
