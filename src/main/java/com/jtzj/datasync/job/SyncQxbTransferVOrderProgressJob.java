@@ -3,6 +3,7 @@ package com.jtzj.datasync.job;
 import com.alibaba.fastjson.JSON;
 import com.jtzj.datasync.service.DataSyncConfigService;
 import com.jtzj.datasync.service.SyncQxbTransferVOrderProgressService;
+import com.jtzj.datasync.util.ThreadLocalHolder;
 import com.jtzj.datasync.util.UspLogger;
 import com.jtzj.datasync.util.UspLoggerFactory;
 import com.xxl.job.core.biz.model.ReturnT;
@@ -26,6 +27,7 @@ public class SyncQxbTransferVOrderProgressJob extends IJobHandler {
 
     @Override
     public ReturnT<String> execute(String param) throws Exception {
+        ThreadLocalHolder.init();
         BigDecimal syncVersion = dataSyncConfigService.getCurrSyncVersion("v_order_progress");
         if (syncVersion == null) {
             logger.error("SyncQxbTransferVOrderProgressJob 同步异常：" + "未找到v_order_progress的同步配置.");
